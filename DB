@@ -1,0 +1,37 @@
+CREATE TABLE [dbo].[M_Items] (
+    [Id]               INT            IDENTITY (1, 1) NOT NULL,
+    [ItemName]         NVARCHAR (MAX) NOT NULL,
+    [ItemPricePerUnit] MONEY          NOT NULL,
+    [ItemDiscount]     TINYINT        DEFAULT ((0)) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[T_Invoice] (
+    [InvoiceNumber]      NVARCHAR (50)  NOT NULL,
+    [BuyerName]          NVARCHAR (100) NOT NULL,
+    [BuyerAddress]       NVARCHAR (100) NOT NULL,
+    [InvoiceData]        DATE           NOT NULL,
+    [DeliveryNote]       NVARCHAR (MAX) NULL,
+    [BuyerOrderNo]       NVARCHAR (50)  NULL,
+    [BuyerOrderDate]     DATE           NULL,
+    [DespatchDocumentNo] NVARCHAR (50)  NULL,
+    [DispatchThrough]    NVARCHAR (50)  NULL,
+    [Destination]        NVARCHAR (100) NULL,
+    [TermsOfDelivery]    NVARCHAR (MAX) NULL,
+    [ModeOfPayment]      NVARCHAR (50)  NOT NULL,
+    [TotalQuantity]      INT            NOT NULL,
+    [TotalPrice]         MONEY          NOT NULL,
+    PRIMARY KEY CLUSTERED ([InvoiceNumber] ASC)
+);
+
+CREATE TABLE [dbo].[T_InvoiceDetails] (
+    [Id]               INT            IDENTITY (1, 1) NOT NULL,
+    [InvoiceNumber]    NVARCHAR (50)  NOT NULL,
+    [ItemName]         NVARCHAR (MAX) NOT NULL,
+    [ItemQuantity]     INT            NOT NULL,
+    [ItemPricePerUnit] MONEY          NOT NULL,
+    [ItemTotalPrice]   MONEY          NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    FOREIGN KEY ([InvoiceNumber]) REFERENCES [dbo].[T_Invoice] ([InvoiceNumber])
+);
+
