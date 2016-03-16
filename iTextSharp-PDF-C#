@@ -14,19 +14,19 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-         string companyName = "PC Bucket";
+         string companyName = "XYZ COMPANY";
             int orderNo = 1234;
             DataTable dt = new DataTable();
             dt.Columns.AddRange(new DataColumn[5] {
-                            new DataColumn("ProductId", typeof(string)),
-                            new DataColumn("Product", typeof(string)),
+                            new DataColumn("#", typeof(string)),
+                            new DataColumn("ItemName", typeof(string)),
+                            new DataColumn("Quantity", typeof(string)),
                             new DataColumn("Price", typeof(int)),
-                            new DataColumn("Quantity", typeof(int)),
                             new DataColumn("Total", typeof(int))});
-            dt.Rows.Add(101, "Sun Glasses", 200, 5, 1000);
-            dt.Rows.Add(102, "Jeans", 400, 2, 800);
-            dt.Rows.Add(103, "Trousers", 300, 3, 900);
-            dt.Rows.Add(104, "Shirts", 550, 2, 1100);
+            dt.Rows.Add(101, "intel i3", 200, 5, 1000);
+            dt.Rows.Add(102, "ASUS MotherBoard", 400, 2, 800);
+            dt.Rows.Add(103, "Transcend RAM", 300, 3, 900);
+            dt.Rows.Add(104, "intel i7 Processor asdasdasdasd asd asd asd asd asd s asdasdasd sd ", 550, 2, 1100);
             using (StringWriter sw = new StringWriter())
             {
                 using (HtmlTextWriter hw = new HtmlTextWriter(sw))
@@ -35,7 +35,7 @@ public partial class _Default : System.Web.UI.Page
 
                     //Generate Invoice (Bill) Header.
                     sb.Append("<br/><br/><br/><table width='100%' cellspacing='0' cellpadding='15'>");
-                    sb.Append("<tr><td align ='left' valign='top'><table><tr><td ><h2> NAME WILL BE HERE </h2><p>Address 1</p><p>Address 2</p><p>Address 3</p></td></tr></table></td><td align='center' valign='top'><table><tr><td bgcolor ='#0000B9' color ='#ffffff'><h2>Order #  PCB"+ orderNo + "<h2/></td></tr><tr>2</tr><tr>3</tr></table></td></tr>");
+                    sb.Append("<tr><td align ='left' valign='top'><table><tr><td ><h2> NAME WILL BE HERE </h2><p>Address 1</p><p>Address 2</p><p>Address 3</p></td></tr></table></td><td align='center' valign='top'><table><tr><td bgcolor ='#0000B9' color ='#ffffff'><h2>Order #  PCB" + orderNo + "<h2/></td></tr><tr>2</tr><tr>3</tr></table></td></tr>");
                     //sb.Append("<tr><td align='left'><b>PROJECT NAME HERE</b><br/><p>Address Line 1</p><p>Address Line 2</p><p>Address Line 3</p></td><td bgcolor='#000096' color='white' align='right'>Order # - PCB16032016</td></tr>");
                     sb.Append("<tr><td colspan = '2'></td></tr>");
                     sb.Append("<tr><td><b>Order No: </b>");
@@ -54,7 +54,7 @@ public partial class _Default : System.Web.UI.Page
                     sb.Append("<tr>");
                     foreach (DataColumn column in dt.Columns)
                     {
-                        sb.Append("<th bgcolor='#D20B0C'><font color='blue'>");
+                        sb.Append("<th bgcolor='#C8C8C8'><font color='black'>");
                         sb.Append(column.ColumnName);
                         sb.Append("</font></th>");
                     }
@@ -70,13 +70,23 @@ public partial class _Default : System.Web.UI.Page
                         }
                         sb.Append("</tr>");
                     }
+
+                    sb.Append("<tr><td align = 'right' colspan = '");
+                    sb.Append(dt.Columns.Count - 1);
+                    sb.Append("'>VAT 20%</td>");
+                    sb.Append("<td>" + " <img src='C:/Users/palak.patel/Documents/Visual Studio 2015/Projects/WebApplication1/WebApplication1/Content/inr.png'/> ");
+                    sb.Append(dt.Compute("sum(Total)", ""));
+                    sb.Append("</td>");
+                    sb.Append("</tr>");
+
                     sb.Append("<tr><td align = 'right' colspan = '");
                     sb.Append(dt.Columns.Count - 1);
                     sb.Append("'>Total</td>");
-                    sb.Append("<td>");
+                    sb.Append("<td>" + " <img src='C:/Users/palak.patel/Documents/Visual Studio 2015/Projects/WebApplication1/WebApplication1/Content/inr.png'/> ");
                     sb.Append(dt.Compute("sum(Total)", ""));
                     sb.Append("</td>");
-                    sb.Append("</tr></table>");
+                    sb.Append("</tr>");
+                    sb.Append("</table>");
 
                     //Export HTML String as PDF.
                     StringReader sr = new StringReader(sb.ToString());
@@ -93,7 +103,6 @@ public partial class _Default : System.Web.UI.Page
                     Response.End();
                 }
             }
-         
     }
   
 }
